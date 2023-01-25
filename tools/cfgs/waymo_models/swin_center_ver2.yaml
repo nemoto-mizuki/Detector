@@ -1,0 +1,152 @@
+# "
+# 2023/01/20 学習開始 swin-transformer を用いて時空間特徴の保存を行うように改良．patch_size :  (1,1,1), window_size: (2,5,5)その他は
+# /media/WD6THDD/Detector/pcdet/models/attentiion_module/video_swin_transformer.py
+# (https://github.com/SwinTransformer/Video-Swin-Transformer/blob/master/mmaction/models/backbones/swin_transformer.py)原本はここから
+# を参照
+# パラメータ設定に関しては，メモリサイズが許す限りでwindow_sizeを大きくしたい，現在は(2,5,5) -> (2,7,7) で試行
+# depth [4] -> [2]
+# line:49 以降変更済み
+
+# "
+
+CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
+
+DATA_CONFIG:
+    _BASE_CONFIG_: tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml
+
+MODEL:
+    NAME: SA_CenterPoint
+
+    VFE:
+        NAME: MeanVFEMultiframe
+
+    BACKBONE_3D:
+        NAME: VoxelResBackBone8xMultiFrame
+
+    MAP_TO_BEV:
+        NAME: HeightCompressionMulti
+        NUM_BEV_FEATURES: 256
+
+    BACKBONE_2D:
+        NAME: BaseBEVBackboneMulti_ver2
+
+        LAYER_NUMS: [5, 5]
+        LAYER_STRIDES: [1, 2]
+        NUM_FILTERS: [128, 256]
+        UPSAMPLE_STRIDES: [1, 2]
+        NUM_UPSAMPLE_FILTERS: [256, 256]
+
+    DENSE_HEAD:
+        NAME: SwinCenterHead
+        CLASS_AGNOSTIC: False
+
+        CLASS_NAMES_EACH_HEAD: [
+            ['Vehicle', 'Pedestrian', 'Cyclist']
+        ]
+
+        SHARED_CONV_CHANNEL: 64
+
+        TRANSFORMAR: 
+            pretrained: null
+            pretrained2d: null
+            patch_size: [1,1,1]
+            in_chans: 64
+            embed_dim: 64
+            depths: [2]
+            num_heads: [8]
+            window_size: [2,7,7]
+            mlp_ratio: 4.
+            qkv_bias: True
+            qk_scale: null
+            drop_rate: 0.
+            attn_drop_rate: 0.
+            drop_path_rate: 0.2
+            norm_layer: 'LayerNorm'
+            patch_norm: False
+            frozen_stages: -1
+            use_checkpoint: False
+
+        USE_BIAS_BEFORE_NORM: True
+        NUM_HM_CONV: 2
+        SEPARATE_HEAD_CFG:
+            HEAD_ORDER: ['center', 'center_z', 'dim', 'rot', 'vel']
+            HEAD_DICT: {
+                'center': {'out_channels': 2, 'num_conv': 2},
+                'center_z': {'out_channels': 1, 'num_conv': 2},
+                'dim': {'out_channels': 3, 'num_conv': 2},
+                'rot': {'out_channels': 2, 'num_conv': 2},
+                'vel': {'out_channels': 2, 'num_conv': 2},
+            }
+
+        TARGET_ASSIGNER_CONFIG:
+            FEATURE_MAP_STRIDE: 8
+            NUM_MAX_OBJS: 500
+            GAUSSIAN_OVERLAP: 0.1
+            MIN_RADIUS: 2
+
+        LOSS_CONFIG:
+            LOSS_WEIGHTS: {
+                'cls_weight': 1.0,
+                'loc_weight': 5.0,
+                'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.2, 0.2]
+            }
+
+        POST_PROCESSING:
+            SCORE_THRESH: 0.1
+            POST_CENTER_LIMIT_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+            MAX_OBJ_PER_SAMPLE: 500
+            NMS_CONFIG:
+                NMS_TYPE: nms_gpu
+                NMS_THRESH: 0.7
+                NMS_PRE_MAXSIZE: 4096
+                NMS_POST_MAXSIZE: 500
+
+    POST_PROCESSING:
+        RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+
+        EVAL_METRIC: waymo
+
+# 調整用
+# OPTIMIZATION:
+#     BATCH_SIZE_PER_GPU: 1
+#     NUM_EPOCHS: 2
+
+#     OPTIMIZER: adam_onecycle
+#     LR: 0.0001
+#     WEIGHT_DECAY: 0.01
+#     MOMENTUM: 0.5
+
+#     MOMS: [0.95, 0.85]
+#     PCT_START: 0.4
+#     DIV_FACTOR: 5
+#     DECAY_STEP_LIST: [35, 45]
+#     LR_DECAY: 0.1
+#     LR_CLIP: 0.0000001
+
+#     LR_WARMUP: False
+#     WARMUP_EPOCH: 1
+
+#     GRAD_NORM_CLIP: 10
+
+
+# 本チャン
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 2
+    NUM_EPOCHS: 10
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.003
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [35, 45]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10
