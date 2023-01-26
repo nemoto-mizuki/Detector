@@ -3,7 +3,7 @@ import argparse
 import datetime
 import glob
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 from pathlib import Path
 from test import repeat_eval_ckpt
 
@@ -26,7 +26,7 @@ def parse_config():
     parser.add_argument('--batch_size', type=int, default=None, required=False, help='batch size for training')
     parser.add_argument('--epochs', type=int, default=None, required=False, help='number of epochs to train for')
     parser.add_argument('--full_params_epochs', type=int, default=None, required=False, help='number of epochs to train for')
-    parser.add_argument('--workers', type=int, default=8, help='number of workers for dataloader')
+    parser.add_argument('--workers', type=int, default=20, help='number of workers for dataloader')
     parser.add_argument('--extra_tag', type=str, default='20230124', help='extra tag for this experiment')
     parser.add_argument('--ckpt', type=str, default=None, help='checkpoint to start from')
     parser.add_argument('--pretrained_model', type=str, default='/media/Elements/Detector/pretrained_model/centerpoint/default/ckpt/checkpoint_epoch_50.pth', help='pretrained_model')
