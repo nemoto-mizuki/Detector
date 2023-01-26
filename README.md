@@ -32,3 +32,6 @@ self-attention moduleの挿入
 shared_convを、512->64から変更
 
   
+
+### メモ
+2023/01/26 gitのバグもしくはエラーにより、リポジトリを再構成
