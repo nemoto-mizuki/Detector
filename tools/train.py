@@ -21,7 +21,7 @@ from train_utils.train_utils import train_model
 
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
-    parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/vit_centerpoint_ver5.yaml', help='specify the config for training')
+    parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/centerbaselstm.yaml', help='specify the config for training')
 
     parser.add_argument('--batch_size', type=int, default=None, required=False, help='batch size for training')
     parser.add_argument('--epochs', type=int, default=None, required=False, help='number of epochs to train for')
@@ -29,7 +29,7 @@ def parse_config():
     parser.add_argument('--workers', type=int, default=8, help='number of workers for dataloader')
     parser.add_argument('--extra_tag', type=str, default='20230124', help='extra tag for this experiment')
     parser.add_argument('--ckpt', type=str, default=None, help='checkpoint to start from')
-    parser.add_argument('--pretrained_model', type=str, default='/media/WD6THDD/Detector/pretrain_models/centerpoint/default/ckpt/checkpoint_epoch_50.pth', help='pretrained_model')
+    parser.add_argument('--pretrained_model', type=str, default='/media/Elements/Detector/pretrained_model/centerpoint/default/ckpt/checkpoint_epoch_50.pth', help='pretrained_model')
     parser.add_argument('--launcher', choices=['none', 'pytorch', 'slurm'], default='none')
     parser.add_argument('--tcp_port', type=int, default=18888, help='tcp port for distrbuted training')
     parser.add_argument('--sync_bn', action='store_true', default=False, help='whether to use sync bn')

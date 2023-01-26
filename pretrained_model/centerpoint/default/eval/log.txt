@@ -1,0 +1,307 @@
+2022-09-05 23:15:46,637   INFO  **********************Start logging**********************
+2022-09-05 23:15:46,637   INFO  CUDA_VISIBLE_DEVICES=ALL
+2022-09-05 23:15:46,637   INFO  cfg_file         /media/Elements/nemoto/OpenPCDet/tools/cfgs/waymo_models/centerpoint.yaml
+2022-09-05 23:15:46,637   INFO  batch_size       2
+2022-09-05 23:15:46,637   INFO  workers          4
+2022-09-05 23:15:46,637   INFO  extra_tag        default
+2022-09-05 23:15:46,638   INFO  ckpt             /media/Elements/nemoto/OpenPCDet/output/media/Elements/nemoto/OpenPCDet/tools/cfgs/waymo_models/centerpoint/default/ckpt/checkpoint_epoch_50.pth
+2022-09-05 23:15:46,638   INFO  launcher         none
+2022-09-05 23:15:46,638   INFO  tcp_port         18888
+2022-09-05 23:15:46,638   INFO  local_rank       0
+2022-09-05 23:15:46,638   INFO  set_cfgs         None
+2022-09-05 23:15:46,638   INFO  max_waiting_mins 30
+2022-09-05 23:15:46,638   INFO  start_epoch      0
+2022-09-05 23:15:46,638   INFO  eval_tag         default
+2022-09-05 23:15:46,638   INFO  eval_all         False
+2022-09-05 23:15:46,638   INFO  ckpt_dir         None
+2022-09-05 23:15:46,638   INFO  save_to_file     False
+2022-09-05 23:15:46,638   INFO  cfg.ROOT_DIR: /media/Elements/nemoto/OpenPCDet
+2022-09-05 23:15:46,638   INFO  cfg.LOCAL_RANK: 0
+2022-09-05 23:15:46,638   INFO  cfg.CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
+2022-09-05 23:15:46,638   INFO  
+cfg.DATA_CONFIG = edict()
+2022-09-05 23:15:46,638   INFO  cfg.DATA_CONFIG.DATASET: WaymoDataset
+2022-09-05 23:15:46,638   INFO  cfg.DATA_CONFIG.DATA_PATH: /media/Elements/nemoto/OpenPCDet/data/waymo
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.PROCESSED_DATA_TAG: waymo_processed_data_v0_5_0
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+2022-09-05 23:15:46,639   INFO  
+cfg.DATA_CONFIG.DATA_SPLIT = edict()
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
+2022-09-05 23:15:46,639   INFO  
+cfg.DATA_CONFIG.SAMPLED_INTERVAL = edict()
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.SAMPLED_INTERVAL.train: 5
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.SAMPLED_INTERVAL.test: 100
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.FILTER_EMPTY_BOXES_FOR_TRAIN: True
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.DISABLE_NLZ_FLAG_ON_POINTS: True
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.USE_SHARED_MEMORY: False
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.SHARED_MEMORY_FILE_LIMIT: 35000
+2022-09-05 23:15:46,639   INFO  
+cfg.DATA_CONFIG.DATA_AUGMENTOR = edict()
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
+2022-09-05 23:15:46,639   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'USE_ROAD_PLANE': False, 'DB_INFO_PATH': ['waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1.pkl'], 'USE_SHARED_MEMORY': False, 'DB_DATA_PATH': ['waymo_processed_data_v0_5_0_gt_database_train_sampled_1_global.npy'], 'PREPARE': {'filter_by_min_points': ['Vehicle:5', 'Pedestrian:5', 'Cyclist:5'], 'filter_by_difficulty': [-1]}, 'SAMPLE_GROUPS': ['Vehicle:15', 'Pedestrian:10', 'Cyclist:10'], 'NUM_POINT_FEATURES': 5, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': True}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x', 'y']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.78539816, 0.78539816]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2022-09-05 23:15:46,639   INFO  
+cfg.DATA_CONFIG.POINT_FEATURE_ENCODING = edict()
+2022-09-05 23:15:46,640   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2022-09-05 23:15:46,640   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity', 'elongation']
+2022-09-05 23:15:46,640   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity', 'elongation']
+2022-09-05 23:15:46,640   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': True}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.1, 0.1, 0.15], 'MAX_POINTS_PER_VOXEL': 5, 'MAX_NUMBER_OF_VOXELS': {'train': 150000, 'test': 150000}}]
+2022-09-05 23:15:46,640   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: /media/Elements/nemoto/OpenPCDet/tools/cfgs/dataset_configs/waymo_dataset.yaml
+2022-09-05 23:15:46,640   INFO  
+cfg.MODEL = edict()
+2022-09-05 23:15:46,640   INFO  cfg.MODEL.NAME: CenterPoint
+2022-09-05 23:15:46,640   INFO  
+cfg.MODEL.VFE = edict()
+2022-09-05 23:15:46,640   INFO  cfg.MODEL.VFE.NAME: MeanVFE
+2022-09-05 23:15:46,640   INFO  
+cfg.MODEL.BACKBONE_3D = edict()
+2022-09-05 23:15:46,640   INFO  cfg.MODEL.BACKBONE_3D.NAME: VoxelResBackBone8x
+2022-09-05 23:15:46,640   INFO  
+cfg.MODEL.MAP_TO_BEV = edict()
+2022-09-05 23:15:46,640   INFO  cfg.MODEL.MAP_TO_BEV.NAME: HeightCompression
+2022-09-05 23:15:46,640   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 256
+2022-09-05 23:15:46,640   INFO  
+cfg.MODEL.BACKBONE_2D = edict()
+2022-09-05 23:15:46,640   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [5, 5]
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [1, 2]
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [128, 256]
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2]
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [256, 256]
+2022-09-05 23:15:46,641   INFO  
+cfg.MODEL.DENSE_HEAD = edict()
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.NAME: CenterHead
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.CLASS_NAMES_EACH_HEAD: [['Vehicle', 'Pedestrian', 'Cyclist']]
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.SHARED_CONV_CHANNEL: 64
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.USE_BIAS_BEFORE_NORM: True
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.NUM_HM_CONV: 2
+2022-09-05 23:15:46,641   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG = edict()
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_ORDER: ['center', 'center_z', 'dim', 'rot']
+2022-09-05 23:15:46,641   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT = edict()
+2022-09-05 23:15:46,641   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center = edict()
+2022-09-05 23:15:46,641   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center.out_channels: 2
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center.num_conv: 2
+2022-09-05 23:15:46,642   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center_z = edict()
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center_z.out_channels: 1
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.center_z.num_conv: 2
+2022-09-05 23:15:46,642   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.dim = edict()
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.dim.out_channels: 3
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.dim.num_conv: 2
+2022-09-05 23:15:46,642   INFO  
+cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.rot = edict()
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.rot.out_channels: 2
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.SEPARATE_HEAD_CFG.HEAD_DICT.rot.num_conv: 2
+2022-09-05 23:15:46,642   INFO  
+cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG = edict()
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.FEATURE_MAP_STRIDE: 8
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NUM_MAX_OBJS: 500
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.GAUSSIAN_OVERLAP: 0.1
+2022-09-05 23:15:46,642   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MIN_RADIUS: 2
+2022-09-05 23:15:46,642   INFO  
+cfg.MODEL.DENSE_HEAD.LOSS_CONFIG = edict()
+2022-09-05 23:15:46,643   INFO  
+cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS = edict()
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2022-09-05 23:15:46,643   INFO  
+cfg.MODEL.DENSE_HEAD.POST_PROCESSING = edict()
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.SCORE_THRESH: 0.1
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.POST_CENTER_LIMIT_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.MAX_OBJ_PER_SAMPLE: 500
+2022-09-05 23:15:46,643   INFO  
+cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG = edict()
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.7
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 4096
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.DENSE_HEAD.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 500
+2022-09-05 23:15:46,643   INFO  
+cfg.MODEL.POST_PROCESSING = edict()
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2022-09-05 23:15:46,643   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: waymo
+2022-09-05 23:15:46,643   INFO  
+cfg.OPTIMIZATION = edict()
+2022-09-05 23:15:46,643   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 4
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 30
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.LR: 0.003
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2022-09-05 23:15:46,644   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2022-09-05 23:15:46,644   INFO  cfg.TAG: centerpoint
+2022-09-05 23:15:46,644   INFO  cfg.EXP_GROUP_PATH: media/Elements/nemoto/OpenPCDet/tools/cfgs/waymo_models
+2022-09-05 23:15:46,645   INFO  Loading Waymo dataset
+2022-09-05 23:15:47,862   INFO  Total skipped info 0
+2022-09-05 23:15:47,862   INFO  Total samples for Waymo dataset: 39987
+2022-09-05 23:15:47,862   INFO  Total sampled samples for Waymo dataset: 400
+2022-09-05 23:15:50,420   INFO  ==> Loading parameters from checkpoint /media/Elements/nemoto/OpenPCDet/output/media/Elements/nemoto/OpenPCDet/tools/cfgs/waymo_models/centerpoint/default/ckpt/checkpoint_epoch_50.pth to GPU
+2022-09-05 23:15:50,491   INFO  ==> Checkpoint trained from version: pcdet+0.5.1+1f5b787
+2022-09-05 23:15:50,505   INFO  ==> Done (loaded 279/279)
+2022-09-05 23:15:50,519   INFO  *************** EPOCH 50 EVALUATION *****************
+eval: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [00:21<00:00,  9.29it/s, recall_0.3=(0, 15862) / 18170]
+2022-09-05 23:16:12,055   INFO  *************** Performance of EPOCH 50 *****************
+2022-09-05 23:16:12,056   INFO  Generate label finished(sec_per_example: 0.0538 second).
+2022-09-05 23:16:12,056   INFO  recall_roi_0.3: 0.000000
+2022-09-05 23:16:12,056   INFO  recall_rcnn_0.3: 0.872977
+2022-09-05 23:16:12,056   INFO  recall_roi_0.5: 0.000000
+2022-09-05 23:16:12,056   INFO  recall_rcnn_0.5: 0.806494
+2022-09-05 23:16:12,056   INFO  recall_roi_0.7: 0.000000
+2022-09-05 23:16:12,056   INFO  recall_rcnn_0.7: 0.536984
+2022-09-05 23:16:12,056   INFO  Average predicted number of objects(400 samples): 199.988
+2022-09-05 23:16:12.285867: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0
+Start the waymo evaluation...
+Number: (pd, 79995) VS. (gt, 16470)
+Level 1: 13952, Level2: 2518)
+WARNING:tensorflow:From /home/ohashi/anaconda3/envs/nemoto/lib/python3.8/contextlib.py:83: TensorFlowTestCase.test_session (from tensorflow.python.framework.test_util) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `self.session()` or `self.cached_session()` instead.
+2022-09-05 23:16:13.218256: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcuda.so.1
+2022-09-05 23:16:13.218974: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.219091: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1733] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: NVIDIA GeForce RTX 3090 computeCapability: 8.6
+coreClock: 1.725GHz coreCount: 82 deviceMemorySize: 23.69GiB deviceMemoryBandwidth: 871.81GiB/s
+2022-09-05 23:16:13.219154: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.219232: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1733] Found device 1 with properties: 
+pciBusID: 0000:02:00.0 name: NVIDIA GeForce RTX 3090 computeCapability: 8.6
+coreClock: 1.725GHz coreCount: 82 deviceMemorySize: 23.70GiB deviceMemoryBandwidth: 871.81GiB/s
+2022-09-05 23:16:13.219255: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0
+2022-09-05 23:16:13.219299: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcublas.so.11
+2022-09-05 23:16:13.219330: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcublasLt.so.11
+2022-09-05 23:16:13.229969: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcufft.so.10
+2022-09-05 23:16:13.234574: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcurand.so.10
+2022-09-05 23:16:13.239571: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcusolver.so.11
+2022-09-05 23:16:13.245113: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcusparse.so.11
+2022-09-05 23:16:13.246555: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudnn.so.8
+2022-09-05 23:16:13.246674: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.246854: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.246965: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.247693: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.247768: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1871] Adding visible gpu devices: 0, 1
+2022-09-05 23:16:13.248078: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-09-05 23:16:13.327335: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.327439: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1733] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: NVIDIA GeForce RTX 3090 computeCapability: 8.6
+coreClock: 1.725GHz coreCount: 82 deviceMemorySize: 23.69GiB deviceMemoryBandwidth: 871.81GiB/s
+2022-09-05 23:16:13.327517: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.327592: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1733] Found device 1 with properties: 
+pciBusID: 0000:02:00.0 name: NVIDIA GeForce RTX 3090 computeCapability: 8.6
+coreClock: 1.725GHz coreCount: 82 deviceMemorySize: 23.70GiB deviceMemoryBandwidth: 871.81GiB/s
+2022-09-05 23:16:13.327639: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.327741: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.327842: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.327941: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:13.328012: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1871] Adding visible gpu devices: 0, 1
+2022-09-05 23:16:13.328589: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0
+2022-09-05 23:16:16.041863: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1258] Device interconnect StreamExecutor with strength 1 edge matrix:
+2022-09-05 23:16:16.041895: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1264]      0 1 
+2022-09-05 23:16:16.041943: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1277] 0:   N N 
+2022-09-05 23:16:16.041950: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1277] 1:   N N 
+2022-09-05 23:16:16.042136: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:16.042894: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:16.043016: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:16.043130: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:16.043722: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:16.043820: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1418] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 19271 MB memory) -> physical GPU (device: 0, name: NVIDIA GeForce RTX 3090, pci bus id: 0000:01:00.0, compute capability: 8.6)
+2022-09-05 23:16:16.045352: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-09-05 23:16:16.045464: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1418] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 21082 MB memory) -> physical GPU (device: 1, name: NVIDIA GeForce RTX 3090, pci bus id: 0000:02:00.0, compute capability: 8.6)
+2022-09-05 23:16:16.076852: I tensorflow/core/platform/profile_utils/cpu_utils.cc:114] CPU Frequency: 2799925000 Hz
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I0905 23:16:16.306979 948127 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:16.306998 948127 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:16.327917 948127 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:19.255599 948127 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:19.282054 948127 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:19.282074 948127 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:19.296747 948127 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:22.253679 948127 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:22.272202 948138 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:22.272222 948138 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:22.290576 948138 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:25.025727 948138 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:25.048427 948134 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:25.048449 948134 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:25.066303 948134 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:27.669129 948134 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:27.691542 948126 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:27.691562 948126 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:27.709722 948126 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:30.576843 948126 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:30.599443 948140 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:30.599462 948140 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:30.617920 948140 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:33.279934 948140 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:33.302032 948134 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:33.302050 948134 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:33.316795 948134 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:36.249387 948134 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:36.272367 948138 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:36.272385 948138 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:36.288543 948138 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:39.245079 948138 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:39.265928 948132 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:39.265944 948132 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:39.287289 948132 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:41.948091 948132 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:41.970721 948131 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:41.970741 948131 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:41.988657 948131 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:44.888345 948131 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:44.907794 948135 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:44.907814 948135 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:44.927911 948135 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:47.962375 948135 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:47.985337 948135 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:47.985355 948135 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:48.001865 948135 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:50.926725 948135 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:50.947651 948137 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:50.947671 948137 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:50.968143 948137 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:54.039779 948137 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:54.063874 948126 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:54.063894 948126 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:54.079049 948126 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:16:56.990406 948126 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:16:57.009294 948140 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:16:57.009312 948140 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:16:57.029944 948140 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:17:00.042856 948140 detection_metrics_ops.cc:221] Done with computing detection metrics.
+I0905 23:17:00.067107 948126 detection_metrics_ops.cc:157] Computing detection metrics for 79995 predicted boxes.
+I0905 23:17:00.067126 948126 detection_metrics_ops.cc:159] Parsing prediction [79995,7][79995]
+I0905 23:17:00.084566 948126 detection_metrics_ops.cc:168] Parsing ground truth [16470,7][16470]
+I0905 23:17:03.074868 948126 detection_metrics_ops.cc:221] Done with computing detection metrics.
+2022-09-05 23:17:03,090   INFO  
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_1/AP: 0.7331 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_1/APH: 0.7278 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_2/AP: 0.6533 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_2/APH: 0.6485 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_1/AP: 0.7585 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_1/APH: 0.6934 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_2/AP: 0.6846 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_2/APH: 0.6246 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_1/AP: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_1/APH: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_2/AP: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_2/APH: 0.0000 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_1/AP: 0.7546 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_1/APH: 0.7421 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/AP: 0.7420 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/APH: 0.7297 
+
+2022-09-05 23:17:03,090   INFO  Result is save to /media/Elements/nemoto/OpenPCDet/output/media/Elements/nemoto/OpenPCDet/tools/cfgs/waymo_models/centerpoint/default/eval/epoch_50/val/default
+2022-09-05 23:17:03,090   INFO  ****************Evaluation done.*****************

@@ -1,23 +1,23 @@
 CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG:
-    _BASE_CONFIG_: /media/WD6THDD/Detector/tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml
+    _BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml
 
 MODEL:
-    NAME: CenterBaseLSTM
+    NAME: CenterPoint
 
     VFE:
-        NAME: MeanVFEMultiframe
+        NAME: MeanVFE
 
     BACKBONE_3D:
-        NAME: VoxelResBackBone8xMultiFrame
+        NAME: VoxelResBackBone8x
 
     MAP_TO_BEV:
-        NAME: HeightCompressionMulti
+        NAME: HeightCompression
         NUM_BEV_FEATURES: 256
 
     BACKBONE_2D:
-        NAME: BaseBEVBackboneMulti
+        NAME: BaseBEVBackbone
 
         LAYER_NUMS: [5, 5]
         LAYER_STRIDES: [1, 2]
@@ -26,7 +26,7 @@ MODEL:
         NUM_UPSAMPLE_FILTERS: [256, 256]
 
     DENSE_HEAD:
-        NAME: LSTM_Center_Head
+        NAME: CenterHead
         CLASS_AGNOSTIC: False
 
         CLASS_NAMES_EACH_HEAD: [
@@ -34,17 +34,6 @@ MODEL:
         ]
 
         SHARED_CONV_CHANNEL: 64
-
-        LSTM_CONFIG:
-            input_dim: 64
-            hidden_dim: 64
-            kernel_size: 3
-            num_layers: 1
-            batch_first: True
-            bias: False
-            return_all_layers: False
-
-
         USE_BIAS_BEFORE_NORM: True
         NUM_HM_CONV: 2
         SEPARATE_HEAD_CFG:
@@ -65,7 +54,7 @@ MODEL:
         LOSS_CONFIG:
             LOSS_WEIGHTS: {
                 'cls_weight': 1.0,
-                'loc_weight': 5.0,
+                'loc_weight': 2.0,
                 'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
             }
 
@@ -85,12 +74,9 @@ MODEL:
         EVAL_METRIC: waymo
 
 
-
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 8
-    NUM_EPOCHS: 10
-    # FIXED_PARAM_TRAIN: 10
-    # FULL_PARAM_TRAIN: 2
+    BATCH_SIZE_PER_GPU: 4
+    NUM_EPOCHS: 30
 
     OPTIMIZER: adam_onecycle
     LR: 0.003
