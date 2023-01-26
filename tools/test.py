@@ -26,7 +26,7 @@ def parse_config():
     parser.add_argument('--batch_size', type=int, default=1, required=False, help='batch size for training')
     parser.add_argument('--workers', type=int, default=4, help='number of workers for dataloader')
     parser.add_argument('--extra_tag', type=str, default='20220124', help='extra tag for this experiment')
-    parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230124/ckpt/checkpoint_epoch_5.pth', help='checkpoint to start from')
+    parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230124/ckpt/checkpoint_epoch_10.pth', help='checkpoint to start from')
     parser.add_argument('--pretrained_model', type=str, default=None, help='pretrained_model')
     parser.add_argument('--launcher', choices=['none', 'pytorch', 'slurm'], default='none')
     parser.add_argument('--tcp_port', type=int, default=18888, help='tcp port for distrbuted training')

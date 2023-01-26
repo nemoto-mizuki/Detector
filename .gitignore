@@ -5,7 +5,7 @@
 *.npy
 *.pkl
 output*/
-out_dir/*
+# out_dir/*
 pretrain_models/*
 .vscode/
 version.py
@@ -13,7 +13,8 @@ version.py
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pth
+*.tfevents.*
 # C extensions
 *.so
 
