@@ -3,7 +3,7 @@ import argparse
 import datetime
 import glob
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 from pathlib import Path
 from test import repeat_eval_ckpt
 
@@ -26,10 +26,10 @@ def parse_config():
     parser.add_argument('--batch_size', type=int, default=None, required=False, help='batch size for training')
     parser.add_argument('--epochs', type=int, default=None, required=False, help='number of epochs to train for')
     parser.add_argument('--full_params_epochs', type=int, default=None, required=False, help='number of epochs to train for')
-    parser.add_argument('--workers', type=int, default=8, help='number of workers for dataloader')
-    parser.add_argument('--extra_tag', type=str, default='20230124', help='extra tag for this experiment')
+    parser.add_argument('--workers', type=int, default=16, help='number of workers for dataloader')
+    parser.add_argument('--extra_tag', type=str, default='20230127', help='extra tag for this experiment')
     parser.add_argument('--ckpt', type=str, default=None, help='checkpoint to start from')
-    parser.add_argument('--pretrained_model', type=str, default='/media/WD6THDD/Detector/pretrain_models/centerpoint/default/ckpt/checkpoint_epoch_50.pth', help='pretrained_model')
+    parser.add_argument('--pretrained_model', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230124/ckpt/checkpoint_epoch_10.pth', help='pretrained_model')
     parser.add_argument('--launcher', choices=['none', 'pytorch', 'slurm'], default='none')
     parser.add_argument('--tcp_port', type=int, default=18888, help='tcp port for distrbuted training')
     parser.add_argument('--sync_bn', action='store_true', default=False, help='whether to use sync bn')

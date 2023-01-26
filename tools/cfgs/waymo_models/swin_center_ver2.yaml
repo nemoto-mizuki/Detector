@@ -52,9 +52,9 @@ MODEL:
             patch_size: [1,1,1]
             in_chans: 64
             embed_dim: 64
-            depths: [2]
+            depths: [4]
             num_heads: [8]
-            window_size: [2,7,7]
+            window_size: [2,5,5]
             mlp_ratio: 4.
             qkv_bias: True
             qk_scale: null
@@ -69,13 +69,12 @@ MODEL:
         USE_BIAS_BEFORE_NORM: True
         NUM_HM_CONV: 2
         SEPARATE_HEAD_CFG:
-            HEAD_ORDER: ['center', 'center_z', 'dim', 'rot', 'vel']
+            HEAD_ORDER: ['center', 'center_z', 'dim', 'rot']
             HEAD_DICT: {
                 'center': {'out_channels': 2, 'num_conv': 2},
                 'center_z': {'out_channels': 1, 'num_conv': 2},
                 'dim': {'out_channels': 3, 'num_conv': 2},
                 'rot': {'out_channels': 2, 'num_conv': 2},
-                'vel': {'out_channels': 2, 'num_conv': 2},
             }
 
         TARGET_ASSIGNER_CONFIG:
@@ -88,7 +87,7 @@ MODEL:
             LOSS_WEIGHTS: {
                 'cls_weight': 1.0,
                 'loc_weight': 5.0,
-                'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.2, 0.2]
+                'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
             }
 
         POST_PROCESSING:
