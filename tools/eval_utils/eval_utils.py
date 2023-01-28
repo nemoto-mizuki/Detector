@@ -20,7 +20,7 @@ def statistics_info(cfg, ret_dict, metric, disp_dict):
         '(%d, %d) / %d' % (metric['recall_roi_%s' % str(min_thresh)], metric['recall_rcnn_%s' % str(min_thresh)], metric['gt_num'])
 
 
-def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=False, result_dir=None):
+def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=False, result_dir=None, visualize=False):
     result_dir.mkdir(parents=True, exist_ok=True)
 
     final_output_dir = result_dir / 'final_result' / 'data'
@@ -64,11 +64,12 @@ def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=Fal
 
         with torch.no_grad():
             pred_dicts, ret_dict = model(batch_dict)
-        # V.draw_scenes(
-        #         points=batch_dict['points'][0][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
-        #         ref_scores=pred_dicts[0]['pred_scores'], ref_labels=pred_dicts[0]['pred_labels'],
-        #         gt_boxes=batch_dict['gt_boxes'].to('cpu').detach().numpy().copy()[0]
-        #     )
+        if visualize:
+            V.draw_scenes(
+                    points=batch_dict['points'][0][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
+                    ref_scores=pred_dicts[0]['pred_scores'], ref_labels=pred_dicts[0]['pred_labels'],
+                    gt_boxes=batch_dict['gt_boxes'].to('cpu').detach().numpy().copy()[0]
+                )
 
         disp_dict = {}
 

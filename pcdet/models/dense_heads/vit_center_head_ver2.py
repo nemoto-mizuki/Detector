@@ -69,7 +69,7 @@ class Attention(nn.Module):
         self.to_k = nn.Conv2d(dim, dim_head, kernel_size=kernel_size, stride=stride, padding=pad, bias=False)
         self.to_q = nn.Conv2d(dim, dim_head, kernel_size=kernel_size, stride=stride, padding=pad, bias=False)
         self.to_v = nn.Conv2d(dim, dim_head, kernel_size=kernel_size, stride=stride, padding=pad, bias=False)
-        self.token = nn.Parameter(torch.randn(self.split_length))
+        # self.token = nn.Parameter(torch.randn(self.split_length))
         self.to_out = nn.Sequential(
             nn.Conv2d(dim_head, dim, kernel_size=out_kernel, stride=out_stride, padding=out_pad),
             nn.Dropout2d(out_drop)
@@ -82,7 +82,7 @@ class Attention(nn.Module):
         q = self.to_q(x).contiguous().view(B, T, -1, H, W)
         v = self.to_v(x).contiguous().view(B, T, -1, H, W)
         k = torch.unsqueeze(k, dim=1)
-        dots = torch.einsum('btchw,bkchw->btkhw', (q,k))
+        dots = torch.einsum('btchw,bkchw->btkhw', (q,k)) * self.scale
         attn = self.attend(dots)
         attn = self.dropout(attn)
         out = torch.mul(attn, v).sum(dim=1, keepdim=True)

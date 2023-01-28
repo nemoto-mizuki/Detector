@@ -24,6 +24,65 @@ MODEL:
         NUM_FILTERS: [128, 256]
         UPSAMPLE_STRIDES: [1, 2]
         NUM_UPSAMPLE_FILTERS: [256, 256]
+        TRANSFORMAR_1: 
+            depth: 1
+            PRENORM:
+                dim: 128
+            ATTENTION: 
+                dim: 128
+                heads: 4
+                dim_head: 128
+                kernel_size: 1
+                stride: 1
+                pad: 1
+                dropout: 0.1
+                split_length: 4
+                out_conv:
+                    input_channels: 128
+                    output_channels: 128
+                    kernel_size: 3
+                    stride: 1
+                    pad: 1
+                    dropout: 0.1
+            FEEDFORWARD: 
+                dim: 128
+                hidden_dim: 256
+                kernel_size: 3
+                stride: 1
+                pad: 1
+                dropout: 0.1
+                split_length: 4
+
+        TRANSFORMAR_2: 
+            depth: 1
+            PRENORM:
+                dim: 256
+            ATTENTION: 
+                dim: 256
+                heads: 4
+                dim_head: 256
+                kernel_size: 1
+                stride: 1
+                pad: 1
+                dropout: 0.1
+                split_length: 4
+                out_conv:
+                    input_channels: 256
+                    output_channels: 256
+                    kernel_size: 3
+                    stride: 1
+                    pad: 1
+                    dropout: 0.1
+            FEEDFORWARD: 
+                dim: 256
+                hidden_dim: 512
+                kernel_size: 3
+                stride: 1
+                pad: 1
+                dropout: 0.1
+                split_length: 4
+
+
 
     DENSE_HEAD:
         NAME: VitCenterHead_v2
@@ -35,35 +94,7 @@ MODEL:
 
         SHARED_CONV_CHANNEL: 64
 
-        TRANSFORMAR: 
-            depth: 6
-            PRENORM:
-                dim: 64
-            ATTENTION: 
-                dim: 64
-                heads: 4
-                dim_head: 128
-                kernel_size: 3
-                stride: 1
-                pad: 1
-                dropout: 0.1
-                split_length: 4
-                out_conv:
-                    input_channels: 64
-                    output_channels: 64
-                    kernel_size: 3
-                    stride: 1
-                    pad: 1
-                    dropout: 0.1
-            FEEDFORWARD: 
-                dim: 64
-                hidden_dim: 128
-                kernel_size: 3
-                stride: 1
-                pad: 1
-                dropout: 0.1
-                split_length: 4
-
+        
         USE_BIAS_BEFORE_NORM: True
         NUM_HM_CONV: 2
         SEPARATE_HEAD_CFG:

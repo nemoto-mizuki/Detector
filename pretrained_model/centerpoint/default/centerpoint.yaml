@@ -1,23 +1,23 @@
 CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG:
-    _BASE_CONFIG_: tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml
+    _BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml
 
 MODEL:
-    NAME: SA_CenterPoint
+    NAME: CenterPoint
 
     VFE:
-        NAME: MeanVFEMultiframe
+        NAME: MeanVFE
 
     BACKBONE_3D:
-        NAME: VoxelResBackBone8xMultiFrame
+        NAME: VoxelResBackBone8x
 
     MAP_TO_BEV:
-        NAME: HeightCompressionMulti
+        NAME: HeightCompression
         NUM_BEV_FEATURES: 256
 
     BACKBONE_2D:
-        NAME: BaseBEVBackboneMulti_ver2
+        NAME: BaseBEVBackbone
 
         LAYER_NUMS: [5, 5]
         LAYER_STRIDES: [1, 2]
@@ -26,7 +26,7 @@ MODEL:
         NUM_UPSAMPLE_FILTERS: [256, 256]
 
     DENSE_HEAD:
-        NAME: VitCenterHead_v2
+        NAME: CenterHead
         CLASS_AGNOSTIC: False
 
         CLASS_NAMES_EACH_HEAD: [
@@ -34,36 +34,6 @@ MODEL:
         ]
 
         SHARED_CONV_CHANNEL: 64
-
-        TRANSFORMAR: 
-            depth: 6
-            PRENORM:
-                dim: 64
-            ATTENTION: 
-                dim: 64
-                heads: 4
-                dim_head: 128
-                kernel_size: 3
-                stride: 1
-                pad: 1
-                dropout: 0.1
-                split_length: 4
-                out_conv:
-                    input_channels: 64
-                    output_channels: 64
-                    kernel_size: 3
-                    stride: 1
-                    pad: 1
-                    dropout: 0.1
-            FEEDFORWARD: 
-                dim: 64
-                hidden_dim: 128
-                kernel_size: 3
-                stride: 1
-                pad: 1
-                dropout: 0.1
-                split_length: 4
-
         USE_BIAS_BEFORE_NORM: True
         NUM_HM_CONV: 2
         SEPARATE_HEAD_CFG:
@@ -84,7 +54,7 @@ MODEL:
         LOSS_CONFIG:
             LOSS_WEIGHTS: {
                 'cls_weight': 1.0,
-                'loc_weight': 5.0,
+                'loc_weight': 2.0,
                 'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
             }
 
@@ -104,11 +74,9 @@ MODEL:
         EVAL_METRIC: waymo
 
 
-
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 2
-    NUM_EPOCHS: 10
-    DISABLE_GRADIENT: ['MeanVFEMultiframe', 'VoxelResBackBone8xMultiFrame', 'HeightCompressionMulti', 'BaseBEVBackboneMulti_ver2']
+    BATCH_SIZE_PER_GPU: 4
+    NUM_EPOCHS: 30
 
     OPTIMIZER: adam_onecycle
     LR: 0.003

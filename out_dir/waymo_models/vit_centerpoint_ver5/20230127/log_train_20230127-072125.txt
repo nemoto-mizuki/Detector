@@ -614,3 +614,47 @@ cfg.OPTIMIZATION = edict()
   (roi_head): None
 )
 2023-01-27 07:21:48,754   INFO  **********************Start training waymo_models/vit_centerpoint_ver5(20230127)**********************
+2023-01-29 02:49:10,908   INFO  **********************End training waymo_models/vit_centerpoint_ver5(20230127)**********************
+
+
+
+2023-01-29 02:49:10,956   INFO  **********************Start evaluation waymo_models/vit_centerpoint_ver5(20230127)**********************
+2023-01-29 02:49:11,065   INFO  Loading Waymo dataset
+2023-01-29 02:50:42,287   INFO  Total skipped info 0
+2023-01-29 02:50:42,287   INFO  Total samples for Waymo dataset: 39987
+2023-01-29 02:50:42,288   INFO  Total sampled samples for Waymo dataset: 7998
+2023-01-29 02:50:42,347   INFO  ==> Loading parameters from checkpoint /media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230127/ckpt/checkpoint_epoch_10.pth to GPU
+2023-01-29 02:50:42,460   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+04448e6+pyc9c1d4e
+2023-01-29 02:50:42,483   INFO  ==> Done (loaded 399/399)
+2023-01-29 02:50:42,489   INFO  *************** EPOCH 10 EVALUATION *****************
+2023-01-29 03:21:30,013   INFO  *************** Performance of EPOCH 10 *****************
+2023-01-29 03:21:30,013   INFO  Generate label finished(sec_per_example: 0.2310 second).
+2023-01-29 03:21:30,013   INFO  recall_roi_0.3: 0.000000
+2023-01-29 03:21:30,013   INFO  recall_rcnn_0.3: 0.876928
+2023-01-29 03:21:30,013   INFO  recall_roi_0.5: 0.000000
+2023-01-29 03:21:30,013   INFO  recall_rcnn_0.5: 0.813082
+2023-01-29 03:21:30,013   INFO  recall_roi_0.7: 0.000000
+2023-01-29 03:21:30,013   INFO  recall_rcnn_0.7: 0.551178
+2023-01-29 03:21:30,016   INFO  Average predicted number of objects(7998 samples): 182.111
+2023-01-29 03:37:21,403   INFO  
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_1/AP: 0.6777 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_1/APH: 0.6730 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_2/AP: 0.6055 
+OBJECT_TYPE_TYPE_VEHICLE_LEVEL_2/APH: 0.6012 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_1/AP: 0.6901 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_1/APH: 0.6595 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_2/AP: 0.6186 
+OBJECT_TYPE_TYPE_PEDESTRIAN_LEVEL_2/APH: 0.5904 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_1/AP: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_1/APH: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_2/AP: 0.0000 
+OBJECT_TYPE_TYPE_SIGN_LEVEL_2/APH: 0.0000 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_1/AP: 0.6631 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_1/APH: 0.6540 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/AP: 0.6418 
+OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/APH: 0.6330 
+
+2023-01-29 03:37:21,403   INFO  Result is save to /media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230127/eval/eval_with_train/epoch_10/val
+2023-01-29 03:37:21,403   INFO  ****************Evaluation done.*****************
+2023-01-29 03:37:21,408   INFO  Epoch 10 has been evaluated
+2023-01-29 03:37:51,438   INFO  **********************End evaluation waymo_models/vit_centerpoint_ver5(20230127)**********************

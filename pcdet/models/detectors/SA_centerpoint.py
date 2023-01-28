@@ -7,15 +7,15 @@ class SelfAttentionCenterPoint(Detector3DTemplate):
         super().__init__(model_cfg=model_cfg, num_class=num_class, dataset=dataset)
         self.module_list = self.build_networks()
 
-        for idx, module in enumerate(self.module_list):
-            if str(module._get_name()) == 'VitCenterHead_v2':
-                print(module._get_name(), 'skip')
-                continue
-            for param in module.parameters():
-                print(module._get_name(), 'requires no grad')
-                param.requires_grad = False
+        # for idx, module in enumerate(self.module_list):
+        #     if str(module._get_name()) == 'VitCenterHead_v2':
+        #         print(module._get_name(), 'skip')
+        #         continue
+        #     for param in module.parameters():
+        #         print(module._get_name(), 'requires no grad')
+        #         param.requires_grad = False
         
-        self.seq_len = 4
+        # self.seq_len = 4
 
     def forward(self, batch_dict):
         '''

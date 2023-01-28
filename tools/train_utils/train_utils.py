@@ -130,13 +130,24 @@ def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_
                 merge_all_iters_to_one_epoch=False, 
                 use_logger_to_record=False, logger=None, logger_iter_interval=None, ckpt_save_time_interval=None, show_gpu_stat=False):
     accumulated_iter = start_iter
+    if optim_cfg.get('DISABLE_GRADIENT', False):
+        for idx, module in enumerate(model.module_list):
+            if str(module._get_name()) in  optim_cfg.DISABLE_GRADIENT:
+                for param in module.parameters():
+                    logger.info(module._get_name(), 'requires no grad')
+                    param.requires_grad = False
+            else:    
+                for param in module.parameters():
+                    logger.info(module._get_name(), 'requires grad')
+                    param.requires_grad = True
+                    
     with tqdm.trange(start_epoch, total_epochs, desc='epochs', dynamic_ncols=True, leave=(rank == 0)) as tbar:
         total_it_each_epoch = len(train_loader)
         if merge_all_iters_to_one_epoch:
             assert hasattr(train_loader.dataset, 'merge_all_iters_to_one_epoch')
             train_loader.dataset.merge_all_iters_to_one_epoch(merge=True, epochs=total_epochs)
             total_it_each_epoch = len(train_loader) // max(total_epochs, 1)
-
+            
         dataloader_iter = iter(train_loader)
         for cur_epoch in tbar:
             if optim_cfg.get('FIXED_PARAM_TRAIN', False) and optim_cfg.FIXED_PARAM_TRAIN == cur_epoch:
