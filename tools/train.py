@@ -26,8 +26,8 @@ def parse_config():
     parser.add_argument('--batch_size', type=int, default=None, required=False, help='batch size for training')
     parser.add_argument('--epochs', type=int, default=None, required=False, help='number of epochs to train for')
     parser.add_argument('--full_params_epochs', type=int, default=None, required=False, help='number of epochs to train for')
-    parser.add_argument('--workers', type=int, default=16, help='number of workers for dataloader')
-    parser.add_argument('--extra_tag', type=str, default='20230127', help='extra tag for this experiment')
+    parser.add_argument('--workers', type=int, default=4, help='number of workers for dataloader')
+    parser.add_argument('--extra_tag', type=str, default='test', help='extra tag for this experiment')
     parser.add_argument('--ckpt', type=str, default=None, help='checkpoint to start from')
     parser.add_argument('--pretrained_model', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230124/ckpt/checkpoint_epoch_10.pth', help='pretrained_model')
     parser.add_argument('--launcher', choices=['none', 'pytorch', 'slurm'], default='none')
@@ -46,10 +46,10 @@ def parse_config():
     parser.add_argument('--num_epochs_to_eval', type=int, default=0, help='number of checkpoints to be evaluated')
     parser.add_argument('--save_to_file', action='store_true', default=False, help='')
     
-    parser.add_argument('--use_tqdm_to_record', action='store_true', default=True, help='if True, the intermediate losses will not be logged to file, only tqdm will be used')
+    parser.add_argument('--use_tqdm_to_record', action='store_true', default=False, help='if True, the intermediate losses will not be logged to file, only tqdm will be used')
     parser.add_argument('--logger_iter_interval', type=int, default=50, help='')
     parser.add_argument('--ckpt_save_time_interval', type=int, default=300, help='in terms of seconds')
-    parser.add_argument('--wo_gpu_stat', action='store_true', default=True, help='')
+    parser.add_argument('--wo_gpu_stat', action='store_true', default=False, help='')
     
 
     args = parser.parse_args()
