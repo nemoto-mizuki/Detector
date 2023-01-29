@@ -34,9 +34,8 @@ class DatasetTemplate(torch_data.Dataset):
         ) if self.training else None
         self.data_processor = DataProcessor(
             self.dataset_cfg.DATA_PROCESSOR, point_cloud_range=self.point_cloud_range,
-            training=self.training, num_point_features=self.point_feature_encoder.num_point_features-1
+            training=self.training, num_point_features=self.point_feature_encoder.num_point_features-1 if self.dataset_cfg.SEQUENCE_CONFIG.SPLIT_DATA == True else self.point_feature_encoder.num_point_features
         )
-
         self.grid_size = self.data_processor.grid_size
         self.voxel_size = self.data_processor.voxel_size
         self.total_epochs = 0
