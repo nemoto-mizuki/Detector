@@ -1,5 +1,5 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import _init_path
 import argparse
 import datetime
@@ -21,19 +21,19 @@ from pcdet.utils import common_utils
 
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
-    parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/vit_centerpoint_ver5.yaml', help='specify the config for training')
+    parser.add_argument('--cfg_file', type=str, default='out_dir/waymo_models/vit_centerpoint_ver5/20230127/vit_centerpoint_ver5.yaml', help='specify the config for training')
 
     parser.add_argument('--batch_size', type=int, default=1, required=False, help='batch size for training')
     parser.add_argument('--workers', type=int, default=4, help='number of workers for dataloader')
-    parser.add_argument('--extra_tag', type=str, default='20230127', help='extra tag for this experiment')
-    parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230127/ckpt/checkpoint_epoch_2.pth', help='checkpoint to start from')
+    parser.add_argument('--extra_tag', type=str, default='test', help='extra tag for this experiment')
+    parser.add_argument('--ckpt', type=str, default='out_dir/waymo_models/vit_centerpoint_ver5/20230127/ckpt/checkpoint_epoch_10.pth', help='checkpoint to start from')
     parser.add_argument('--pretrained_model', type=str, default=None, help='pretrained_model')
     parser.add_argument('--launcher', choices=['none', 'pytorch', 'slurm'], default='none')
     parser.add_argument('--tcp_port', type=int, default=18888, help='tcp port for distrbuted training')
     parser.add_argument('--local_rank', type=int, default=0, help='local rank for distributed training')
     parser.add_argument('--set', dest='set_cfgs', default=None, nargs=argparse.REMAINDER,
                         help='set extra config keys if needed')
-    parser.add_argument('--visualize', default=True, help='use visualizer')
+    parser.add_argument('--visualize', default=False, help='use visualizer')
     parser.add_argument('--max_waiting_mins', type=int, default=30, help='max waiting minutes')
     parser.add_argument('--start_epoch', type=int, default=0, help='')
     parser.add_argument('--eval_tag', type=str, default='eval', help='eval tag for this experiment')

@@ -44,7 +44,7 @@ class BaseBEVBackboneMulti_Attn(nn.Module):
                     nn.ReLU()
                 ])
             self.blocks.append(nn.Sequential(*cur_layers))
-            self.attn.append(Transformer(self.model_cfg.TRANSFORMER_{}.format(idx)))            
+            self.attn.append(Transformer(self.model_cfg.TRANSFORMER[idx]))            
             if len(upsample_strides) > 0:
                 stride = upsample_strides[idx]
                 if stride >= 1:

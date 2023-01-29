@@ -350,8 +350,8 @@ class WaymoDataset(DatasetTemplate):
         sequence_name = pc_info['lidar_sequence']
         sample_idx = pc_info['sample_idx']
         
-        if sample_idx < 12:
-            index += 12
+        if sample_idx < 4:
+            index += 4
             info = copy.deepcopy(self.infos[index])
             pc_info = info['point_cloud']
             sequence_name = pc_info['lidar_sequence']
