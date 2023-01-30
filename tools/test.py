@@ -21,8 +21,8 @@ from pcdet.utils import common_utils
 
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
-    parser.add_argument('--cfg_file', type=str, default='out_dir/waymo_models/vit_centerpoint_ver5/20230127/vit_centerpoint_ver5.yaml', help='specify the config for training')
 
+    parser.add_argument('--cfg_file', type=str, default='out_dir/waymo_models/vit_centerpoint_ver5/20230127/vit_centerpoint_ver5.yaml', help='specify the config for training')
     parser.add_argument('--batch_size', type=int, default=4, required=False, help='batch size for training')
     parser.add_argument('--workers', type=int, default=8, help='number of workers for dataloader')
     parser.add_argument('--extra_tag', type=str, default='20230127', help='extra tag for this experiment')

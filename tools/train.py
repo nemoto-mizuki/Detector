@@ -3,7 +3,7 @@ import argparse
 import datetime
 import glob
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 from pathlib import Path
 from test import repeat_eval_ckpt
 
@@ -21,8 +21,8 @@ from train_utils.train_utils import train_model
 
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
-    parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/vit_centerpoint_ver6_sabev.yaml', help='specify the config for training')
 
+    parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/vit_centerpoint_ver6_sabev.yaml', help='specify the config for training')
     parser.add_argument('--batch_size', type=int, default=None, required=False, help='batch size for training')
     parser.add_argument('--epochs', type=int, default=None, required=False, help='number of epochs to train for')
     parser.add_argument('--full_params_epochs', type=int, default=None, required=False, help='number of epochs to train for')
