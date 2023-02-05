@@ -32,9 +32,13 @@ class DatasetTemplate(torch_data.Dataset):
         self.data_augmentor = DataAugmentor(
             self.root_path, self.dataset_cfg.DATA_AUGMENTOR, self.class_names, logger=self.logger
         ) if self.training else None
+        if self.dataset_cfg.get('SEQUENCE_CONFIG', False):
+            split_data = self.dataset_cfg.SEQUENCE_CONFIG.SPLIT_DATA
+        else:
+            split_data = False
         self.data_processor = DataProcessor(
             self.dataset_cfg.DATA_PROCESSOR, point_cloud_range=self.point_cloud_range,
-            training=self.training, num_point_features=self.point_feature_encoder.num_point_features-1 if self.dataset_cfg.SEQUENCE_CONFIG.SPLIT_DATA == True else self.point_feature_encoder.num_point_features
+            training=self.training, num_point_features=self.point_feature_encoder.num_point_features-1 if  split_data == True else self.point_feature_encoder.num_point_features
         )
         self.grid_size = self.data_processor.grid_size
         self.voxel_size = self.data_processor.voxel_size

@@ -62,7 +62,7 @@ class DemoDataset(DatasetTemplate):
 
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
-    parser.add_argument('--cfg_file', type=str, default='cfgs/kitti_models/second.yaml',
+    parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/centerpoint.yaml',
                         help='specify the config for demo')
     parser.add_argument('--data_path', type=str, default='demo_data',
                         help='specify the point cloud data file or directory')

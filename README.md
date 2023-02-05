@@ -35,3 +35,9 @@ shared_convを、512->64から変更
 
 ### メモ
 2023/01/26 gitのバグもしくはエラーにより、リポジトリを再構成
+
+### 修論用結果
+LSTM
+/media/WD6THDD/Detector/out_dir/waymo_models/centerbaselstm/20230124/eval/epoch_10/val/eval/log_eval_20230130-112108.txt
+ViT
+/media/WD6THDD/Detector/out_dir/vit_centerpoint_ver5/20230127/vit_centerpoint_ver5/20230127/eval/epoch_10/val/eval/log_eval_20230129-165725.txt

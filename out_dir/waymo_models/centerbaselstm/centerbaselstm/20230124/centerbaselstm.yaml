@@ -1,7 +1,7 @@
 CLASS_NAMES: ['Vehicle', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG:
-    _BASE_CONFIG_: /media/WD6THDD/Detector/tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml
+    _BASE_CONFIG_: /media/Elements/Detector/tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml
 
 MODEL:
     NAME: CenterBaseLSTM
