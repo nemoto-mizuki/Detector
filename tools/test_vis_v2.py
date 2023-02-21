@@ -31,15 +31,16 @@ from pcdet.datasets.waymo.waymo_dataset import WaymoDataset
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
 
-    # parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/centerpoint.yaml', help='specify the config for training')
-    parser.add_argument('--cfg_file', type=str, default='out_dir/waymo_models/vit_centerpoint_ver5/20230127/vit_centerpoint_ver5.yaml', help='specify the config for training')
-    #parser.add_argument('--cfg_file', type=str, default='out_dir/waymo_models/centerbaselstm/20230124/centerbaselstm.yaml', help='specify the config for training')
+    parser.add_argument('--cfg_file', type=str, default='tools/cfgs/waymo_models/centerpoint.yaml', help='specify the config for training')
+    # parser.add_argument('--cfg_file', type=str, default='out_dir/waymo_models/vit_centerpoint_ver5/20230127/vit_centerpoint_ver5.yaml', help='specify the config for training')
+    # parser.add_argument('--cfg_file', type=str, default='out_dir/waymo_models/centerbaselstm/20230124/centerbaselstm.yaml', help='specify the config for training')
     parser.add_argument('--batch_size', type=int, default=1, required=False, help='batch size for training')
     parser.add_argument('--workers', type=int, default=8, help='number of workers for dataloader')
+    parser.add_argument('--model_name', type=str, default='centerpoint', help='model name and save dir name')
     parser.add_argument('--extra_tag', type=str, default='Final_Results', help='extra tag for this experiment')
-    # parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/pretrained_model/centerpoint/default/ckpt/checkpoint_epoch_50.pth', help='checkpoint to start from')
-    parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230127/ckpt/checkpoint_epoch_10.pth', help='checkpoint to start from')
-    #parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/centerbaselstm/centerbaselstm/20230124/ckpt/checkpoint_epoch_10.pth', help='checkpoint to start from')
+    parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/pretrained_model/centerpoint/default/ckpt/checkpoint_epoch_50.pth', help='checkpoint to start from')
+    # parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/vit_centerpoint_ver5/20230127/ckpt/checkpoint_epoch_10.pth', help='checkpoint to start from')
+    # parser.add_argument('--ckpt', type=str, default='/media/WD6THDD/Detector/out_dir/waymo_models/centerbaselstm/centerbaselstm/20230124/ckpt/checkpoint_epoch_10.pth', help='checkpoint to start from')
     parser.add_argument('--pretrained_model', type=str, default=None, help='pretrained_model')
     parser.add_argument('--launcher', choices=['none', 'pytorch', 'slurm'], default='none')
     parser.add_argument('--tcp_port', type=int, default=18888, help='tcp port for distrbuted training')
@@ -74,6 +75,16 @@ def custom_batch(batch_dict):
             continue
         batch_dict[key] = np.array(val)
     batch_dict['batch_size'] = 1
+
+def create_movie(img_list, frame_id, args):
+    width, height, _ = img_list[0].shape
+    # img_list = np.uint8(img_list)
+    path = 'video_output' + '/' + args.model_name + '/' + frame_id + '.avi'
+    video = cv2.VideoWriter(path, cv2.VideoWriter_fourcc(*"XVID"), 10, (height, width), True)
+    for image in img_list:
+        video.write(image.astype(np.uint8))
+    cv2.destroyAllWindows()
+    video.release()
     
 update = True
 index = 0
@@ -88,11 +99,8 @@ def visualize(model,test_loader, args, logger,WD, dist_test=False):
     vis = o3d.visualization.VisualizerWithKeyCallback()  # <-コールバック対応クラス
     vis.create_window(
         window_name="Hoge",  # ウインドウ名
-        width=800,           # 幅
-        height=600,          # 高さ
-        left=50,             # 表示位置(左)
-        top=50               # 表示位置(上)
     )  
+    vis.set_full_screen(True)
     opt = vis.get_render_option()
     opt.background_color = np.asarray([0, 0, 0])
     
@@ -111,18 +119,26 @@ def visualize(model,test_loader, args, logger,WD, dist_test=False):
     def capture_callback(_vis):
         global index
         buffer = _vis.capture_screen_float_buffer(True)
-        img = cv2.resize(np.asarray(buffer),(400,300))*255
+        img = cv2.resize(np.asarray(buffer),(1920*2,1080*2))*255
         img = img[:,:,::-1]
         cv2.imwrite('capture/{:06d}.png'.format(index),img)
     vis.register_key_callback(ord('C'), capture_callback)
+    def start_stop_callback(_vis):
+        global update
+        if update == True:
+            update = False
+        elif update == False:
+            update = True
+    vis.register_key_callback(ord('Z'), start_stop_callback)
     #dataloader_iter = WD.__iter__()
     current_cloud = o3d.geometry.PointCloud()
     #is.add_geometry(current_cloud)
     ctr = vis.get_view_control()
 
-    #param = o3d.io.read_pinhole_camera_parameters('ScreenCamera_2023-02-03-00-26-31.json')
-    #ctr.convert_from_pinhole_camera_parameters(param)
+    param = o3d.io.read_pinhole_camera_parameters('ScreenCamera_2023-02-06-15-20-19.json')
+    ctr.convert_from_pinhole_camera_parameters(param)
     first = True
+    img_list = []
     while True:
         if update:
             vis.clear_geometries()
@@ -133,11 +149,11 @@ def visualize(model,test_loader, args, logger,WD, dist_test=False):
             load_data_to_gpu(batch_dict)
             with torch.no_grad():
                 pred_dicts, ret_dict = model(batch_dict)
-            points = batch_dict['points'][0][:, 1:4].cpu().detach().numpy()
+            points = batch_dict['points'][:, 1:4].cpu().detach().numpy()
             pred_boxes = pred_dicts[0]['pred_boxes'].cpu().detach().numpy()
             pred_labels = pred_dicts[0]['pred_labels'].cpu().detach().numpy()
             gt_boxes = batch_dict['gt_boxes'].to('cpu').detach().numpy().copy()[0]
-
+            frame_id = batch_dict['frame_id'][0][:-4]
             for gt_box in gt_boxes:
                 obb = o3d.geometry.OrientedBoundingBox(
                     gt_box[0:3],
@@ -162,9 +178,35 @@ def visualize(model,test_loader, args, logger,WD, dist_test=False):
 
             current_cloud.points = o3d.utility.Vector3dVector(points)
             current_cloud.paint_uniform_color([1,1,1])
+            vis.get_render_option().point_size=2
+            vis.get_render_option().line_width=100.0
+            ctr = vis.get_view_control()
+            ctr.convert_from_pinhole_camera_parameters(param)
             vis.add_geometry(current_cloud,reset_bounding_box=first)
+            buffer = vis.capture_screen_float_buffer(True)
+            img = cv2.resize(np.asarray(buffer),(1920,1080))*255
+            img = img[:,:,::-1]
+            # img_list.append(img)
+            if first:
+                current_frame_id = frame_id
+            if current_frame_id != frame_id:
+                print('---------------- create movies ----------------')
+                create_movie(img_list, frame_id, args)
+                img_list.clear()
+                img_list.append(img)
+                index = (index +  1) % len(WD)
+                print('{:06d}/{:06d}'.format(index,len(WD)-1))
+            elif current_frame_id == frame_id:
+                print('stock image' ,index)
+                img_list.append(img)
+                index = (index +  1) % len(WD)
+                print('{:06d}/{:06d}'.format(index,len(WD)-1))                
+            
+            current_frame_id = frame_id
             first=False
-            update =False
+            # update =False
+            # view_control = vis.get_view_control()
+            # pinhole_parameters = view_control.convert_to_pinhole_camera_parameters()
         #vis.update_geometry(current_cloud)
         vis.poll_events()
         vis.update_renderer()
@@ -202,6 +244,7 @@ def main():
         args.batch_size = args.batch_size // total_gpus
 
     logger = common_utils.create_logger(None, rank=cfg.LOCAL_RANK)
+    os.makedirs('video_output' + '/' + args.model_name, exist_ok=True)
 
     test_set, test_loader, sampler = build_dataloader(
         dataset_cfg=cfg.DATA_CONFIG,
